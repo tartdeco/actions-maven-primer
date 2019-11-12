@@ -18,13 +18,23 @@ jobs:
 
     - name: Set up environment
       run: |
-        echo "::set-env name=FROM_SETUP_START_OF_BUILD::hello"
+        export
+        declare -x SANE_DATE_COMMAND="date +%Y-%m-%d--%H-%M-%S"
+        declare -x SANE_DATE_FORMAT="%Y-%m-%d--%H-%M-%S"
+        declare -x START_OF_BUILD="$(${SANE_DATE_COMMAND})"
+        echo "::set-env name=SANE_DATE_COMMAND::${SANE_DATE_COMMAND}"
+        echo "::set-env name=SANE_DATE_FORMAT::${SANE_DATE_FORMAT}"
+        echo "::set-env name=START_OF_BUILD::${START_OF_BUILD}"
         export
 
     - name: Download dependencies with Maven
       run: |
-        export ARTIFACT_NAME="m2-primer.tgz"
         export
+        declare -x ARTIFACT_NAME="${m2-primer-${START_OF_BUILD}}.tgz"
+        export
+        echo "::set-env name=ARTIFACT_NAME::${ARTIFACT_NAME}"
+        mvn -B dependency:resolve --file pom.xml
+        tar czf "${ARTIFACT_NAME}" ~/.m2
 
     - name: Upload artifact
       uses: actions/upload-artifact@master
