@@ -28,18 +28,21 @@ jobs:
 
     - name: Download dependencies with Maven
       run: |
+        declare -x ARTIFACT_DIRECTORY="m2-primer-${START_OF_BUILD}.tgz"
         declare -x ARTIFACT_NAME="m2-primer-${START_OF_BUILD}.tgz"
         export
         echo "::set-env name=ARTIFACT_NAME::${ARTIFACT_NAME}"
         mvn -B dependency:resolve --file pom.xml
-        echo tar cvzf "${ARTIFACT_NAME}" ~/.m2
-        tar cvzf "${ARTIFACT_NAME}" ~/.m2
+        declare -x ARTIFACT_NAME="m2-primer-${START_OF_BUILD}"
+        declare -x ARTIFACT_PATH="$HOME/.m2"
+      #        echo tar cvzf "${ARTIFACT_NAME}" ~/.m2
+      #        tar cvzf "${ARTIFACT_NAME}" ~/.m2
 
     - name: Upload artifact
       uses: actions/upload-artifact@master
       with:
         name: ${{ env.ARTIFACT_NAME }}
-        path: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.ARTIFACT_PATH }}
 
 #    - name: Deploy to GitHub Package Registry
 #      env:
