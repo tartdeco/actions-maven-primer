@@ -31,10 +31,12 @@ jobs:
         declare -x ARTIFACT_DIRECTORY="m2-primer-${START_OF_BUILD}.tgz"
         declare -x ARTIFACT_NAME="m2-primer-${START_OF_BUILD}.tgz"
         export
-        echo "::set-env name=ARTIFACT_NAME::${ARTIFACT_NAME}"
         mvn -B dependency:resolve --file pom.xml
         declare -x ARTIFACT_NAME="m2-primer-${START_OF_BUILD}"
         declare -x ARTIFACT_PATH="$HOME/.m2"
+        echo "::set-env name=ARTIFACT_NAME::${ARTIFACT_NAME}"
+        echo "::set-env name=ARTIFACT_PATH::${ARTIFACT_PATH}"
+
       #        echo tar cvzf "${ARTIFACT_NAME}" ~/.m2
       #        tar cvzf "${ARTIFACT_NAME}" ~/.m2
 
