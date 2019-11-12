@@ -39,8 +39,8 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: "{{env.ARTIFACT_NAME}}"
-        path: "{{env.ARTIFACT_NAME}}"
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.ARTIFACT_NAME }}
 
 #    - name: Deploy to GitHub Package Registry
 #      env:
