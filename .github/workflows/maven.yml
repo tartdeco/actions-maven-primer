@@ -34,13 +34,13 @@ jobs:
         export
         echo "::set-env name=ARTIFACT_NAME::${ARTIFACT_NAME}"
         mvn -B dependency:resolve --file pom.xml
-        tar czf "${ARTIFACT_NAME}" ~/.m2
+        tar cvzf ~/"${ARTIFACT_NAME}" ~/.m2
 
     - name: Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: "${ARTIFACT_NAME}"
-        path: "${ARTIFACT_NAME}"
+        name: "{{env.ARTIFACT_NAME}}"
+        path: "{{env.ARTIFACT_NAME}}"
 
 #    - name: Deploy to GitHub Package Registry
 #      env:
